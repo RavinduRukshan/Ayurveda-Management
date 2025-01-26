@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Treatment Record Form</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Handle staff name search and suggestions
+            $('#staffNameInput').on('input', function () {
+                let query = $(this).val();
+                if (query.length >= 2) {
+                    $.ajax({
+                        url: '/user/staff/search',
+                        method: 'GET',
+                        data: { query: query },
+                        success: function (data) {
+                            let suggestions = '';
+                            data.forEach(function (staff) {
+                                suggestions += `<li class="list-group-item" onclick="selectStaff(${staff.id}, '${staff.name}')">${staff.name}</li>`;
+                            });
+                            $('#staffSuggestions').html(suggestions).show();
+                        },
+                        error: function () {
+                            console.error('Failed to fetch staff suggestions.');
+                        }
+                    });
+                } else {
+                    $('#staffSuggestions').hide();
+                }
+            });
+
+            // Handle username validation
+            $("#username").on("input", function () {
+                const username = $(this).val();
+
+                if (username.length > 0) {
+                    $.ajax({
+                        url: "/checkUsername",
+                        type: "GET",
+                        data: { username: username },
+                        success: function (exists) {
+                            if (exists) {
+                                $("#username-error").show(); // Show error message
+                                $("#saveButton").prop("disabled", true); // Disable Save button
+                            } else {
+                                $("#username-error").hide(); // Hide error message
+                                $("#saveButton").prop("disabled", false); // Enable Save button
+                            }
+                        },
+                        error: function () {
+                            console.error("An error occurred while checking the username.");
+                        }
+                    });
+                } else {
+                    // Reset error message and button if input is cleared
+                    $("#username-error").hide();
+                    $("#saveButton").prop("disabled", true);
+                }
+            });
+
+            // Add form validation using Bootstrap
+            (() => {
+                'use strict';
+                const forms = document.querySelectorAll('.needs-validation');
+                Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                        if (!form.checkValidity()) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            })();
+
+            // Add the logic to handle the save button
+            $("#saveButton").click(function () {
+                if ($("#username-error").is(":hidden") && $("form")[0].checkValidity()) {
+                    $("form").submit(); // Submit the form if all checks pass
+                }
+            });
+
+            // Clear the profile image file input
+            $('#clearProfileImage').on('click', function () {
+                $('#profileImage').val(''); // Clear the file input
+            });
+
+        });
+
+        // Select a staff member and populate input fields
+        function selectStaff(id, name) {
+            $('#staffNameInput').val(name); // Set staff name
+            $('#staffIdInput').val(id); // Set staff ID
+            $('#staffSuggestions').hide(); // Hide suggestions
+        }
+    </script>
+
+    <style>
+        /* Style for staff suggestions dropdown */
+        #staffSuggestions {
+            position: absolute;
+            background: white;
+            border: 1px solid #ccc;
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .list-group-item {
+            cursor: pointer;
+        }
+
+        .list-group-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        #username-error {
+            color: red;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <h1 class="text-center mb-4" th:text="${record.id == null ? 'Add Treatment Record' : 'Edit Treatment Record'}"></h1>
+    <form th:action="@{/treatment/save}" th:object="${record}" method="post">
+        <input type="hidden" th:field="*{id}"> <!-- Hidden field for the id -->
+
+        <!-- Patient Search -->
+        <div class="mb-3 position-relative">
+            <label for="patientSearchInput" class="form-label">Patient</label>
+            <input type="text" id="patientSearchInput" class="form-control" placeholder="Search by name or contact number" required>
+            <ul id="patientSuggestions" class="list-group"></ul>
+            <input type="hidden" id="patientIdInput" name="patient.id" th:field="*{patient.id}" required>
+            <div class="invalid-feedback">Please select a patient.</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="treatmentDate" class="form-label">Treatment Date</label>
+            <input type="date" class="form-control" id="treatmentDate" name="treatmentDate" th:value="${record.treatmentDate}" required>
+        </div>
+        <div class="mb-3">
+            <label for="treatmentTime" class="form-label">Treatment Time</label>
+            <input type="time" class="form-control" id="treatmentTime" name="treatmentTime" th:value="${record.treatmentTime}" required>
+        </div>
+        <div class="mb-3">
+            <label for="sicknessDescription" class="form-label">Sickness Description</label>
+            <textarea class="form-control" id="sicknessDescription" name="sicknessDescription" th:text="${record.sicknessDescription}"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="medicinePrescribed" class="form-label">Medicine Prescribed</label>
+            <textarea class="form-control" id="medicinePrescribed" name="medicinePrescribed" th:text="${record.medicinePrescribed}"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="therapyGiven" class="form-label">Therapy Given</label>
+            <textarea class="form-control" id="therapyGiven" name="therapyGiven" th:text="${record.therapyGiven}"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="progressNotes" class="form-label">Progress Notes</label>
+            <textarea class="form-control" id="progressNotes" name="progressNotes" th:text="${record.progressNotes}"></textarea>
+        </div>
+
+        <!-- Staff Name Input with Search -->
+        <div class="form-group mb-3 position-relative">
+            <label for="staffNameInput" class="form-label">Staff Name</label>
+            <input type="text" id="staffNameInput" class="form-control" placeholder="Search staff by name" required />
+            <ul id="staffSuggestions" class="list-group"></ul>
+            <input type="hidden" id="staffIdInput" name="staff.id" th:field="*{staff.id}" required />
+            <div class="invalid-feedback">Please select a staff member.</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="treatmentAmount" class="form-label">Treatment Amount</label>
+            <input type="number" class="form-control" id="treatmentAmount" name="treatmentAmount" step="0.01" th:value="${record.treatmentAmount}" required>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-success">Save</button>
+            <a href="/treatment/list" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

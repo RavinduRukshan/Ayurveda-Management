@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="text-center">Staff List</h2>
+    <a th:href="@{/staff/showFormForAdd}" class="btn btn-primary mb-3">Add New Staff</a>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th>Dispensary</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="tempStaff : ${staffs}">
+            <td th:text="${tempStaff.id}"></td>
+            <td th:text="${tempStaff.name}"></td>
+            <td th:text="${tempStaff.role.roleName}"></td>
+            <td th:text="${tempStaff.contactNumber}"></td>
+            <td th:text="${tempStaff.email}"></td>
+            <td th:text="${tempStaff.dispensary.name}"></td>
+            <td>
+                <a th:href="@{/staff/showFormForUpdate(staffId=${tempStaff.id})}" class="btn btn-warning btn-sm">Edit</a>
+                <a th:href="@{/staff/delete(staffId=${tempStaff.id})}" class="btn btn-danger btn-sm"
+                   onclick="return confirm('Are you sure you want to delete this staff member?');">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

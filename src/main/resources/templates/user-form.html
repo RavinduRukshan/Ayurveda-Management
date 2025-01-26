@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Form</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Handle staff name search and suggestions
+            $('#staffNameInput').on('input', function () {
+                let query = $(this).val();
+                if (query.length >= 2) {
+                    $.ajax({
+                        url: '/user/staff/search',
+                        method: 'GET',
+                        data: { query: query },
+                        success: function (data) {
+                            let suggestions = '';
+                            data.forEach(function (staff) {
+                                suggestions += `<li class="list-group-item" onclick="selectStaff(${staff.id}, '${staff.name}')">${staff.name}</li>`;
+                            });
+                            $('#staffSuggestions').html(suggestions).show();
+                        },
+                        error: function () {
+                            console.error('Failed to fetch staff suggestions.');
+                        }
+                    });
+                } else {
+                    $('#staffSuggestions').hide();
+                }
+            });
+
+            // Handle username validation
+            $("#username").on("input", function () {
+                const username = $(this).val();
+
+                if (username.length > 0) {
+                    $.ajax({
+                        url: "/checkUsername",
+                        type: "GET",
+                        data: { username: username },
+                        success: function (exists) {
+                            if (exists) {
+                                $("#username-error").show(); // Show error message
+                                $("#saveButton").prop("disabled", true); // Disable Save button
+                            } else {
+                                $("#username-error").hide(); // Hide error message
+                                $("#saveButton").prop("disabled", false); // Enable Save button
+                            }
+                        },
+                        error: function () {
+                            console.error("An error occurred while checking the username.");
+                        }
+                    });
+                } else {
+                    // Reset error message and button if input is cleared
+                    $("#username-error").hide();
+                    $("#saveButton").prop("disabled", true);
+                }
+            });
+
+            // Add form validation using Bootstrap
+            (() => {
+                'use strict';
+                const forms = document.querySelectorAll('.needs-validation');
+                Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                        if (!form.checkValidity()) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            })();
+
+            // Add the logic to handle the save button
+            $("#saveButton").click(function () {
+                if ($("#username-error").is(":hidden") && $("form")[0].checkValidity()) {
+                    $("form").submit(); // Submit the form if all checks pass
+                }
+            });
+
+            // Clear the profile image file input
+            $('#clearProfileImage').on('click', function () {
+                $('#profileImage').val(''); // Clear the file input
+            });
+
+        });
+
+        // Select a staff member and populate input fields
+        function selectStaff(id, name) {
+            $('#staffNameInput').val(name); // Set staff name
+            $('#staffIdInput').val(id); // Set staff ID
+            $('#staffSuggestions').hide(); // Hide suggestions
+        }
+    </script>
+
+    <style>
+        /* Style for staff suggestions dropdown */
+        #staffSuggestions {
+            position: absolute;
+            background: white;
+            border: 1px solid #ccc;
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .list-group-item {
+            cursor: pointer;
+        }
+
+        .list-group-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        #username-error {
+            color: red;
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+<div class="container mt-5">
+    <!-- Page Heading -->
+    <h2 class="text-center mb-4" th:text="${user.id == null ? 'Add New User' : 'Update User'}"></h2>
+
+    <!-- Error Message Section -->
+    <div class="alert alert-danger" th:if="${error}">
+        <p th:text="${error}"></p>
+    </div>
+
+    <!-- User Form -->
+    <form th:action="@{/user/save}" th:object="${user}" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
+        <input type="hidden" th:field="*{id}"> <!-- Hidden field for user ID -->
+
+        <!-- Staff Name Input with Search -->
+        <div class="form-group mb-3 position-relative">
+            <label for="staffNameInput" class="form-label">Staff Name</label>
+            <input type="text" id="staffNameInput" class="form-control" placeholder="Search staff by name" required />
+            <ul id="staffSuggestions" class="list-group"></ul>
+            <input type="hidden" id="staffIdInput" name="staff.id" th:field="*{staff.id}" required />
+            <div class="invalid-feedback">Please select a staff member.</div>
+        </div>
+
+        <!-- Username Input with Validation -->
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" th:field="*{username}" required>
+            <small id="username-error">This username is already taken. Please choose another one.</small>
+            <div class="invalid-feedback">Please provide a username.</div>
+        </div>
+
+        <!-- Password Input -->
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" th:field="*{password}" required>
+            <div class="invalid-feedback">Please provide a password.</div>
+        </div>
+
+        <!-- Role Selection -->
+        <div class="mb-3">
+            <label for="roleId" class="form-label">Role</label>
+            <select class="form-select" id="roleId" th:field="*{role}" required>
+                <option value="" disabled selected>Select Role</option>
+                <option th:each="authority : ${authorities}"
+                        th:value="${authority.id}"
+                        th:text="${authority.authority}"></option>
+            </select>
+            <div class="invalid-feedback">Please select a role.</div>
+        </div>
+
+        <!-- Status Selection -->
+        <div class="mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select class="form-select" id="status" th:field="*{status}" required>
+                <option value="">Select Status</option>
+                <option th:value="${T(com.example.Ayurveda_Management.model.Status).Active}">Active</option>
+                <option th:value="${T(com.example.Ayurveda_Management.model.Status).Inactive}">Inactive</option>
+            </select>
+            <div class="invalid-feedback">Please select a status.</div>
+        </div>
+
+        <!-- Profile Image Upload -->
+<!--        <div class="form-group mb-3">-->
+<!--            <label for="profileImage" class="form-label">Profile Image</label>-->
+<!--            <input type="file" id="profileImage" name="profileImage" class="form-control" />-->
+<!--        </div>-->
+
+        <!-- Profile Image Upload with Clear Button -->
+        <div class="form-group mb-3">
+            <label for="profileImage" class="form-label">Profile Image</label>
+            <div class="input-group">
+                <input type="file" id="profileImage" name="profileImage" class="form-control" />
+                <button type="button" id="clearProfileImage" class="btn btn-outline-secondary">Clear</button>
+            </div>
+        </div>
+
+
+        <!-- Form Buttons -->
+        <div class="d-flex justify-content-between">
+            <button type="submit" id="saveButton" class="btn btn-primary">Save</button>
+            <a th:href="@{/user/list}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Enable Bootstrap form validation
+    (() => {
+        'use strict';
+        const forms = document.querySelectorAll('.needs-validation');
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    console.log('Form validation failed!');
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+</script>
+
+</body>
+</html>
