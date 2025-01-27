@@ -1,0 +1,19 @@
+/* Additional Custom Styling (optional) */
+.navbar-nav .dropdown-menu {
+    background-color: #24757e;
+     /* Match navbar background */
+  }
+  
+  .navbar-nav .dropdown-item {
+    color: white;
+  }
+  
+  .navbar-nav .dropdown-item:hover {
+    background-color: #1d5d60; /* Change color on hover */
+  }
+  
+
+  /* Hide the arrow (caret) in the dropdown toggle */
+.navbar .dropdown-toggle::after {
+  display: none;
+}

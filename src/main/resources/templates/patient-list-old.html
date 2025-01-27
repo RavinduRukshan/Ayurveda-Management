@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient List</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <style>
+        .table-container {
+            max-height: 435px; /* Adjust height as needed to fit approximately 6 tasks */
+            overflow-y: auto;
+        }
+
+        .table th:nth-child(1), .table td:nth-child(1) {
+            width: 10%;
+        }
+        .table th:nth-child(2), .table td:nth-child(2) {
+            width: 40%;
+        }
+        .table th:nth-child(3), .table td:nth-child(3) {
+            width: 10%; /* More space for Title */
+        }
+        .table th:nth-child(5), .table td:nth-child(5) {
+            width: 15%; /* More space for Title */
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="my-4">Patient List</h1>
+    <hr>
+    <a th:href="@{/patient/showFormForAdd}" class="btn btn-primary mb-3">Add New Patient</a>
+
+    <div class="table-container">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Contact</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="tempPatient : ${patients}">
+                    <td th:text="${tempPatient.id}"></td>
+                    <td th:text="${tempPatient.name}"></td>
+                    <td th:text="${tempPatient.age}"></td>
+                    <td th:text="${tempPatient.contactNumber}"></td>
+                    <td>
+                        <a th:href="@{/patient/showFormForUpdate(patientId=${tempPatient.id})}" class="btn btn-warning">Edit</a>
+                        <a th:href="@{/patient/delete(patientId=${tempPatient.id})}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

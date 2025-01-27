@@ -1,0 +1,128 @@
+/* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+  }
+  
+  .signin-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin-top:50px;
+  }
+  
+  .alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+  
+  /* Main Section */
+  .signin-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80px;
+    background-color: white;
+    min-height: 70vh; /* Adjusted height */
+  }
+  
+  .signin-card {
+    display: flex;
+    background-color:#e6e7e9 ;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex-direction: row;
+  }
+  
+  .signin-form {
+    padding: 40px;
+    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+    
+  }
+  
+  .signin-form h2 {
+    margin-bottom: 80px;
+    margin-top:30px;
+    color: #1f7a8c;
+    text-align: center; /* Centers the text */
+  }
+  
+  .signin-form p {
+    margin-bottom: 50px;
+   
+    
+  }
+  .italic-link {
+    font-style: italic;
+}
+  
+  .signin-form form input  {
+    margin-bottom: 30px;
+    padding: 10px;
+    border: 1px solid #a8aaab;
+    background-color: #dadcdd ;
+    width:350px;
+    font-style: italic;
+    
+   
+  }
+  .signin-form form select{
+    margin-bottom: 30px;
+    padding: 10px;
+    border: 1px solid #a8aaab;
+    background-color: #dadcdd ;
+    width:350px;
+    font-style: italic;
+   
+  }
+ 
+  
+  .signin-form .forgot-link {
+    font-size: 0.8em;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    color: #1f7a8c;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    
+    
+  }
+  
+  .signin-form .signin-button {
+    margin: 0 auto; /* Automatically centers the button horizontally */
+    display: block;
+    padding: 10px;
+    background-color: #4F954D;
+    color: white;
+    border: none;
+    width:150px;
+    border-radius: 30px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .signin-image img {
+    width: 300px;
+    height: 550px;
+    object-fit: cover;
+  }
+  
+  

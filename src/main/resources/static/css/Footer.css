@@ -1,0 +1,39 @@
+/* Footer container styling */
+footer {
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+  margin-top: auto;
+  text-align: center; /* Center-align all text */
+}
+
+/* Social Media Links and Heading */
+footer h5 {
+  font-size: 1rem; /* Adjust heading font size */
+  margin-bottom: 1rem; /* Add spacing below heading */
+}
+
+footer .d-flex {
+  justify-content: center; /* Center-align the social media links */
+  align-items: center; /* Vertically align the icons */
+}
+
+footer .text-dark {
+  margin-top: 20px;
+}
+
+footer .bi {
+  font-size: 1.5rem; /* Size of social media icons */
+  margin: 0 10px; /* Spacing between icons */
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  footer .text-dark {
+    margin-top: 10px;
+  }
+
+  footer .bi {
+    font-size: 1.2rem; /* Adjust icon size for smaller screens */
+    margin: 0 5px;
+  }
+}

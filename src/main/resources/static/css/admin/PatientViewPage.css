@@ -1,0 +1,72 @@
+.patient-view-page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin-top: 70px;
+  margin-left: 240px;
+  margin-right: 20px;
+}
+
+.patient-view-content {
+  display: flex;
+  flex-grow: 1;
+}
+
+.patient-details-container {
+  flex: 1;
+  padding: 20px;
+}
+
+.breadcrumbs {
+  font-size: 18px;
+  color: #282a2c;
+}
+
+.patient-name {
+  font-size: 28px;
+  font-weight: bold;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.patient-info {
+  margin: 20px 0;
+  line-height: 1.8;
+}
+
+.info-item {
+  font-size: 16px;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.info-item strong {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.medical-history-title {
+  font-size: 18px;
+  color: #2c3e50;
+  margin-top: 40px;
+  margin-bottom: 15px;
+}
+
+.medical-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.medical-history-table th,
+.medical-history-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.medical-history-table th {
+  background-color: #f8f9fa;
+  color: #2c3e50;
+}

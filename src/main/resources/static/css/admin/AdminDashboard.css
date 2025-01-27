@@ -1,0 +1,325 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin-top: 70px;
+  margin-left: 240px;
+}
+
+.dashboard-content {
+  flex: 1;
+  /* padding:20px; */
+  overflow-y: auto;
+}
+
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-bottom: 20px; */
+  margin-top: 30px;
+}
+
+.summary-cards {
+  display: flex;
+  gap: 20px;
+  margin-left: 40px;
+}
+
+.card {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  background-color: #28a745;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  min-width: 200px;
+  flex-direction: row;
+}
+
+.card-icon {
+  font-size: 30px;
+}
+
+.card h3 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.card p {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.actions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-right: 50px;
+  align-items: flex-end;
+}
+
+.search-container {
+  position: relative;
+}
+
+.search-bar {
+  padding: 10px;
+  border: 1px solid #232323;
+  border-radius: 20px;
+  width: 500px;
+}
+
+.search-bar::placeholder {
+  color: #232323;
+}
+
+.search-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+}
+
+.add-patient-btn {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.add-patient-btn:hover {
+  background-color: #218838;
+}
+
+.layout-container {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  flex-direction: row-reverse;
+}
+
+.form-container {
+  flex: 1;
+  background-color: #d9d9d9;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 400px;
+  margin-top: 63px;
+}
+
+.form-container h3 {
+  margin-bottom: 20px;
+}
+
+.form-container input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.submit-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #28a745;
+  color: white;
+  margin-top: 10px;
+  width: 150px;
+
+  display: block;        /* Makes the button behave like a block element */
+  margin-left: auto;     /* Aligns the left margin to auto */
+  margin-right: auto;
+
+}
+
+.patients-table {
+  /* margin-top: 0; */
+  flex: 2;
+}
+
+.patients-table h4 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.patients-table table {
+  width: 100%;
+  border-radius: 0px;
+  overflow: hidden;
+}
+
+.patients-table th,
+.patients-table td {
+  border: 1px solid #111111;
+  padding: 10px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.patients-table th {
+  font-weight: bold;
+  text-align: center;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  margin-top: 25px;
+}
+
+.popup-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  background-color: #d9d9d9;
+}
+
+.popup-content h3 {
+  margin-top: 10px;
+  margin-bottom: 15px;
+  color: #28a745;
+}
+
+.popup-form .form-group {
+  margin-bottom: 15px;
+}
+
+.popup-form .form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.popup-form .form-group input,
+.popup-form .form-group select,
+.popup-form .form-group textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.popup-form .register-btn {
+  margin-top: 15px;
+  padding: 10px 15px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.popup-form .register-btn:hover {
+  background-color: #218838;
+}
+
+
+
+
+
+  /* Container for the staff selector ==============================*/
+  .staff-selector-container {
+    position: relative; /* Position relative for dropdown alignment */
+    width: 100%; /* Adjust width to fit the parent container */
+    max-width: 400px; /* Optional: Set a max width for input field */
+    margin: 0 auto; /* Center horizontally if needed */
+  }
+  
+  /* Styling for the input field */
+  .staff-selector-container input {
+    width: 100%; /* Full width of the container */
+    padding: 10px 12px; /* Inner spacing for input field */
+    font-size: 14px; /* Standard font size */
+    border: 1px solid #ccc; /* Light border for a clean look */
+    border-radius: 4px; /* Rounded corners for input field */
+    outline: none; /* Remove default outline on focus */
+    transition: border-color 0.3s ease; /* Smooth focus effect */
+  }
+  
+  /* Highlight the input field on focus */
+  .staff-selector-container input:focus {
+    border-color: #007bff; /* Change border color on focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add subtle glow */
+  }
+  
+  /* Dropdown for staff options */
+  .staff-options {
+    position: absolute; /* Position relative to container */
+    top: 100%; /* Align directly below the input field */
+    left: 0; /* Align to the left of the container */
+    width: 100%; /* Match the width of the input field */
+    background: #fff; /* White background for dropdown */
+    border: 1px solid #ccc; /* Light border for separation */
+    border-radius: 4px; /* Rounded corners for dropdown */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    max-height: 200px; /* Limit height with scroll */
+    overflow-y: auto; /* Enable vertical scrolling for long lists */
+    z-index: 1000; /* Ensure it appears above other elements */
+    padding: 0; /* Remove default padding for ul */
+    margin-top: 5px; /* Space between input and dropdown */
+    list-style: none; /* Remove default bullet points */
+  }
+  
+  /* Individual list item in the dropdown */
+  .staff-options li {
+    padding: 10px; /* Spacing inside each item */
+    font-size: 14px; /* Standard font size */
+    cursor: pointer; /* Pointer cursor for interactivity */
+    transition: background-color 0.2s ease; /* Smooth hover effect */
+  }
+  
+  /* Hover effect for dropdown items */
+  .staff-options li:hover {
+    background-color: #f1f1f1; /* Light gray on hover */
+  }
+  
+  /* Selected staff item styling (optional, add a class when selected) */
+  .staff-options li.selected {
+    background-color: #007bff; /* Highlight color for selection */
+    color: #fff; /* White text on selected item */
+  }
+  
+
+  .patient-info-container{
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: rgb(178, 255, 204);
+
+  }
+
+  h3 {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    color: #28a745;
+    text-align: center;
+  }

@@ -49,7 +49,7 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public List<Patient> findByNameContainingOrContactNumber(String name, String contactNumber) {
-        return patientRepository.findByNameContainingOrContactNumber(name, contactNumber));
+        return patientRepository.findByNameContainingOrContactNumber(name, contactNumber);
     }
 
 //    @Override
