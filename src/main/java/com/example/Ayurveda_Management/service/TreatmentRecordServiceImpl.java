@@ -1,6 +1,5 @@
 package com.example.Ayurveda_Management.service;
 
-import com.example.Ayurveda_Management.model.Staff;
 import com.example.Ayurveda_Management.model.TreatmentRecord;
 import com.example.Ayurveda_Management.repository.TreatmentRecordRepository;
 import org.springframework.stereotype.Service;

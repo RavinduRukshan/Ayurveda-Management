@@ -1,66 +1,143 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Form</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Ayurweda Management System - Login" />
+    <title>Ayurveda Management System</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/AdminDashboard.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/Sidebar.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/dashboard.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/Navbar.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/MainContent.css}">
 </head>
+
 <body>
-<div class="container mt-5">
-    <h2 class="text-center" th:text="${staff.id != null ? 'Update Staff' : 'Add New Staff'}"></h2>
-    <form th:action="@{/staff/save}" th:object="${staff}" method="post">
-        <input type="hidden" th:field="*{id}"> <!-- Hidden field for the id -->
-        <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" th:field="*{name}" required>
+<div id="root">
+    <div class="page-container">
+        <!-- Navbar------------------------------------------------------------------------------------------------- -->
+        <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #24757e; color: #ffffff">
+            <div class="container-fluid">
+                <div class="d-flex align-items-center flex-wrap flex-lg-nowrap w-100 justify-content-end">
+                    <ul class="navbar-nav d-flex flex-row w-auto mt-2 mt-lg-0">
+                        <li class="nav-items">
+                            <div class="dropdown">
+                                <button
+                                        class="nav-link text-white dropdown-toggle"
+                                        style="background: none; border: none"
+                                        id="navbarDropdown"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                >
+                                    <img
+                                            src="/images/user.png"
+                                            alt="user"
+                                            style="width: 37px; padding-right: 9px; margin-right: 5px"
+                                    />
+                                    <img
+                                            src="/images/arrow.png"
+                                            alt="arrow"
+                                            style="width: 15px"
+                                    />
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="#profile">Profile</a></li>
+                                    <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+
+        <div class="main-content">
+            <!-- Sidebar-------------------------------------------------------------------------------------------- -->
+            <div class="sidebar">
+                <h2>Dashboard</h2>
+                <ul>
+                    <li><a th:href="@{/treatment/list}"><img src="/images/Dashboard.png" alt="Dashboard" style="width: 25px; margin-right: 10px" /><span>Dashboard</span></a></li>
+                    <li><a th:href="@{/patient/list}"><img src="/images/Patients.png" alt="Patients" style="width: 25px; margin-right: 10px" /><span>Patients</span></a></li>
+                    <li><a th:href="@{/user/list}"><img src="/images/Patients.png" alt="Users" style="width: 25px; margin-right: 10px" /><span>Users</span></a></li>
+                    <li><a th:href="@{/staff/list}"><img src="/images/Patients.png" alt="Staff" style="width: 25px; margin-right: 10px" /><span>Staff</span></a></li>
+                </ul>
+            </div>
+
+            <!-- Staff Form----------------------------------------------------------------------------------------- -->
+            <div class="container mt-5">
+                <h2 class="text-center" th:text="${staff.id != null ? 'Add New Staff' : 'Update Staff'}"></h2>
+                <form th:action="@{/staff/save}" th:object="${staff}" method="post">
+                    <input type="hidden" th:field="*{id}"> <!-- Hidden field for the id -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" th:field="*{name}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="role" class="form-label">Role</label>
+                        <select class="form-control" id="role" th:field="*{role}" required>
+                            <option value="" disabled>Select Role</option>
+                            <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.roleName}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contactNumber" class="form-label">Contact Number</label>
+                        <input type="text" class="form-control" id="contactNumber" th:field="*{contactNumber}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" th:field="*{email}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <textarea class="form-control" id="address" th:field="*{address}" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="salary" class="form-label">Salary</label>
+                        <input type="number" class="form-control" id="salary" th:field="*{salary}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="hireDate" class="form-label">Hire Date</label>
+                        <input type="date" class="form-control" id="hireDate" th:field="*{hireDate}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-control" id="status" th:field="*{status}" required>
+                            <option value="">Select Status</option>
+                            <option th:value="${T(com.example.Ayurveda_Management.model.Status).Active}">Active</option>
+                            <option th:value="${T(com.example.Ayurveda_Management.model.Status).Inactive}">Inactive</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dispensary" class="form-label">Dispensary</label>
+                        <select class="form-control" id="dispensary" th:field="*{dispensary}" required>
+                            <option value="" disabled>Select Dispensary</option>
+                            <option th:each="dispensary : ${dispensaries}" th:value="${dispensary.id}" th:text="${dispensary.name}"></option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a href="/staff/list" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+
+
+
         </div>
-        <div class="mb-3">
-            <label for="role" class="form-label">Role</label>
-            <select class="form-control" id="role" th:field="*{role}" required>
-                <option value="" disabled>Select Role</option>
-                <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.roleName}"></option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="contactNumber" class="form-label">Contact Number</label>
-            <input type="text" class="form-control" id="contactNumber" th:field="*{contactNumber}" required>
-        </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" th:field="*{email}" required>
-        </div>
-        <div class="mb-3">
-            <label for="address" class="form-label">Address</label>
-            <textarea class="form-control" id="address" th:field="*{address}" required></textarea>
-        </div>
-        <div class="mb-3">
-            <label for="salary" class="form-label">Salary</label>
-            <input type="number" class="form-control" id="salary" th:field="*{salary}" required>
-        </div>
-        <div class="mb-3">
-            <label for="hireDate" class="form-label">Hire Date</label>
-            <input type="date" class="form-control" id="hireDate" th:field="*{hireDate}" required>
-        </div>
-        <div class="mb-3">
-            <label for="status" class="form-label">Status</label>
-            <select class="form-control" id="status" th:field="*{status}" required>
-                <option value="">Select Status</option>
-                <option th:value="${T(com.example.Ayurveda_Management.model.Status).Active}">Active</option>
-                <option th:value="${T(com.example.Ayurveda_Management.model.Status).Inactive}">Inactive</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="dispensary" class="form-label">Dispensary</label>
-            <select class="form-control" id="dispensary" th:field="*{dispensary}" required>
-                <option value="" disabled>Select Dispensary</option>
-                <option th:each="dispensary : ${dispensaries}" th:value="${dispensary.id}" th:text="${dispensary.name}"></option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Save</button>
-        <a href="/staff/list" class="btn btn-secondary">Cancel</a>
-    </form>
+    </div>
+    </div>
+
+
+
+
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

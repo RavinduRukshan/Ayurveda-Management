@@ -1,25 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Ayurweda Management System - Login" />
-  <title>Ayurweda Management System</title>
+  <title>Ayurveda Management System</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/admin/AdminDashboard.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/Sidebar.css}">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/admin/PatientsPage.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/admin/dashboard.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/Navbar.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/MainContent.css}">
 </head>
 
 <body>
 <div id="root">
-  <div class="patients-page-container">
-    <!-- Navbar -->
+  <div class="page-container">
+    <!-- Navbar----------------------------------------------------------------------------------------------------- -->
     <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #24757e; color: #ffffff">
       <div class="container-fluid">
         <div class="d-flex align-items-center flex-wrap flex-lg-nowrap w-100 justify-content-end">
@@ -55,58 +56,57 @@
       </div>
     </nav>
 
-    <div class="patients-content">
-      <div class="patients-top-section">
-        <div class="patients-actions-container">
-          <div class="patients-search-container">
-            <input type="text" placeholder="Search for patients" class="patients-search-bar" />
-            <i class="fas fa-search patients-search-icon"></i>
+    <div class="content">
+      <div class="top-section">
+        <h2 class="page-title">Patients List</h2>
+        <div class="actions-container">
+          <div class="search-container">
+            <input type="text" placeholder="Search for patients" class="search-bar" />
+            <i class="fas fa-search search-icon"></i>
           </div>
-          <button class="patients-add-btn" onclick="openCreatePopup()">
-            <i class="fas fa-user-plus"></i> Add New Patient
-          </button>
+            <a th:href="@{/patient/showFormForAdd}" class="btn add-btn">Add New Patient</a>
         </div>
       </div>
 
-      <div class="patients-main-content">
-        <!-- Sidebar -->
+      <div class="main-content">
+        <!-- Sidebar------------------------------------------------------------------------------------------------ -->
         <div class="sidebar">
           <h2>Dashboard</h2>
           <ul>
-            <li><a href="#adminDashboard.html"><img src="/images/Dashboard.png" alt="Dashboard" style="width: 25px; margin-right: 10px" /><span>Dashboard</span></a></li>
-            <li><a href="#Patient.html"><img src="/images/Patients.png" alt="Patients" style="width: 25px; margin-right: 10px" /><span>Patients</span></a></li>
-            <li><a href="#user.html"><img src="/images/Patients.png" alt="Users" style="width: 25px; margin-right: 10px" /><span>Users</span></a></li>
-            <li><a href="#staff.html"><img src="/images/Patients.png" alt="Staff" style="width: 25px; margin-right: 10px" /><span>Staff</span></a></li>
+            <li><a th:href="@{/treatment/list}"><img src="/images/Dashboard.png" alt="Dashboard" style="width: 25px; margin-right: 10px" /><span>Dashboard</span></a></li>
+            <li><a th:href="@{/patient/list}"><img src="/images/Patients.png" alt="Patients" style="width: 25px; margin-right: 10px" /><span>Patients</span></a></li>
+            <li><a th:href="@{/user/list}"><img src="/images/Patients.png" alt="Users" style="width: 25px; margin-right: 10px" /><span>Users</span></a></li>
+            <li><a th:href="@{/staff/list}"><img src="/images/Patients.png" alt="Staff" style="width: 25px; margin-right: 10px" /><span>Staff</span></a></li>
           </ul>
         </div>
 
-        <div class="patients-table-container">
-          <h4>Patients List</h4>
-          <table class="patients-table">
+        <!-- Patient List------------------------------------------------------------------------------------------- -->
+        <div class="table-container">
+          <table class="table">
             <thead>
             <tr>
               <th>Patient Id</th>
               <th>Patient Name</th>
               <th>Patient Age</th>
+              <th>Contact</th>
+              <th>Address</th>
               <th>Actions</th>
             </tr>
             </thead>
             <tbody>
                 <tr th:each="tempPatient : ${patients}">
-                  <td th:text="${tempPatient.id}"></td>
+                  <td class="id" th:text="${tempPatient.id}"></td>
                   <td th:text="${tempPatient.name}"></td>
                   <td th:text="${tempPatient.age}"></td>
-
-                  <td>
-<!--                <a th:href="@{/patient/update(patientId=${tempPatient.id})}" onclick="openCreatePopup(patientId)" class="btn-action btn-update">Update</a>-->
-                    <button type="button" class="btn-action btn-update"
-                            th:onclick="'openUpdatePopup(' + ${tempPatient.id} + ')'" >
-                      Update
-                    </button>
-                     <a th:href="@{/patient/delete(patientId=${tempPatient.id})}" class="btn-action btn-delete">Delete</a>
-<!--                  <button class="btn-action btn-update" onclick="openUpdatePopup()">Update</button>-->
-<!--                    <button class="btn-action btn-delete" th:onclick="openDeletePopup(' + ${tempPatient.id} + ')">Delete</button>-->
-
+                  <td th:text="${tempPatient.contactNumber}"></td>
+                  <td th:text="${tempPatient.address}"></td>
+                  <td class="action-buttons">
+                    <a type="button" class="btn btn-action btn-view"
+                            th:href="@{/patient/profile(patientId=${tempPatient.id})}">View</a>
+                    <a type="button" class="btn btn-action btn-update"
+                           th:href="@{/patient/showFormForUpdate(patientId=${tempPatient.id})}">Update</a>
+                    <a type="button" class="btn btn-action btn-delete"
+                            th:href="@{/patient/delete(patientId=${tempPatient.id})}" >Delete</a>
                   </td>
                 </tr>
             </tbody>
@@ -115,9 +115,9 @@
       </div>
     </div>
 
-    <!-- Delete confirmation popup -->
-    <div id="delete-popup-overlay" class="patients-popup-overlay-delete" style="display: none;">
-      <div class="patients-popup-content-delete" onClick="event.stopPropagation()">
+    <!-- Delete confirmation popup---------------------------------------------------------------------------------- -->
+    <div id="delete-popup-overlay" class="popup-overlay-delete" style="display: none;">
+      <div class="popup-content-delete" onClick="event.stopPropagation()">
         <h3 class="delete-text">Are you sure you want to delete this?</h3>
         <div class="confirmation-buttons">
           <button class="btn-action btn-view" onClick="handleDelete()">Yes, Delete</button>
@@ -126,139 +126,13 @@
       </div>
     </div>
 
-    <!-- Create Patient Popup -->
-    <div id="create-popup-overlay" class="patients-popup-overlay" style="display: none;">
-      <div class="patients-popup-content" onClick="event.stopPropagation()">
-        <h3>Patient Registration</h3>
-        <form id="patient-form" th:action="@{/patient/save}" th:object="${patient}" method="POST" class="patients-popup-form" onSubmit="handleFormSubmit(event)">
-          <input type="text" th:field="*{name}" id="patient-name" placeholder="Patient Name" required />
-          <input type="number" th:field="*{age}" id="patient-age" placeholder="Age" required />
-          <select th:field="*{gender}" id="patient-gender" required>
-            <option value="" disabled>Gender</option>
-            <option th:value="${T(com.example.Ayurveda_Management.model.Gender).Male}">Male</option>
-            <option th:value="${T(com.example.Ayurveda_Management.model.Gender).Female}">Female</option>
-            <option th:value="${T(com.example.Ayurveda_Management.model.Gender).Other}">Other</option>
-          </select>
-          <input type="text" th:field="*{contactNumber}" id="patient-contactNumber" placeholder="Phone Number" required />
-          <input type="email" th:field="*{email}" id="patient-email" placeholder="Enter Email" required />
-          <textarea th:field="*{address}" id="patient-address" placeholder="Address" required></textarea>
-          <textarea th:field="*{medicalHistory}" id="patient-medicalHistory" placeholder="Medical History" required></textarea>
-          <input type="date" th:field="*{registrationDate}" id="patient-registrationDate" required />
-          <textarea th:field="*{notes}" id="patient-notes" placeholder="Notes"></textarea>
-          <button type="submit" class="patients-register-btn">Register</button>
-          <button type="button" onClick="closePopup()" class="patient-close-btn">Close</button>
-        </form>
-      </div>
-    </div>
 
 
 
-    <!-- Update Patient Popup -->
-<!--    <div id="update-popup-overlay" class="patients-popup-overlay" style="display: none;">-->
-<!--      <div class="patients-popup-content" onClick="event.stopPropagation()">-->
-<!--        <h3>Patient Update</h3>-->
-<!--        <form id="update-form" th:action="@{/patient/save}" th:object="${patient}" method="POST" class="patients-popup-form">-->
-<!--          &lt;!&ndash; Hidden ID field for patient update &ndash;&gt;-->
-
-<!--          <input type="text" th:field="*{name}" id="update-patient-name" placeholder="Patient Name" required />-->
-
-<!--          <input type="number" th:field="*{age}" id="update-patient-age" placeholder="Age" required />-->
-
-<!--          <select th:field="*{gender}" id="update-patient-gender" required>-->
-<!--            <option value="" disabled>Gender</option>-->
-<!--            <option th:value="${T(com.example.Ayurveda_Management.model.Gender).Male}">Male</option>-->
-<!--            <option th:value="${T(com.example.Ayurveda_Management.model.Gender).Female}">Female</option>-->
-<!--            <option th:value="${T(com.example.Ayurveda_Management.model.Gender).Other}">Other</option>-->
-<!--          </select>-->
-
-<!--          <input type="text" th:field="*{contactNumber}" id="update-patient-contactNumber" placeholder="Phone Number" required />-->
-<!--          <input type="email" th:field="*{email}" id="update-patient-email" placeholder="Enter Email" required />-->
-<!--          <textarea th:field="*{address}" id="update-patient-address" placeholder="Address" required></textarea>-->
-<!--          <textarea th:field="*{medicalHistory}" id="update-patient-medicalHistory" placeholder="Medical History" required></textarea>-->
-<!--          <input type="date" th:field="*{registrationDate}" id="update-patient-registrationDate" required />-->
-<!--          <textarea th:field="*{notes}" id="update-patient-notes" placeholder="Notes"></textarea>-->
-
-<!--          <button type="submit" class="patients-register-btn">Update</button>-->
-<!--          <button type="button" onClick="closePopup()" class="patient-close-btn">Close</button>-->
-<!--        </form>-->
-<!--      </div>-->
-
-
-
-
-
-
-
-
-    </div>
   </div>
 </div>
 
-<!-- Bootstrap JS and Popper.js -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
-<script>
-  // JavaScript functions for popup visibility
-  function openCreatePopup() {
-    document.getElementById('create-popup-overlay').style.display = 'flex'; // Show the popup
-  }
-
-
-
-
-  function openDeletePopup() {
-    document.getElementById('delete-popup-overlay').style.display = 'flex'; // Show delete popup
-  }
-  function closeDeletePopup() {
-    document.getElementById('delete-popup-overlay').style.display = 'none'; // Hide delete popup
-  }
-  // Delete confirmation handling
-  function handleDelete() {
-    alert('Patient deleted!');
-    closeDeletePopup();
-  }
-  function cancelDelete() {
-    closeDeletePopup();
-  }
-
-
-
-
-
-
-  function closePopup() {
-    document.getElementById('create-popup-overlay').style.display = 'none'; // Hide the create popup
-    document.getElementById('update-popup-overlay').style.display = 'none'; // Hide the update popup
-  }
-
-
-  function openUpdatePopup(patientId) {
-    document.getElementById('update-popup-overlay').style.display = 'flex'; // Show update popup
-    document.getElementById('update-patient-id').value = patientId;
-  }
-
-
-
-
-  // Handle form submission (for create and update)
-  // function handleFormSubmit(event) {
-  //   event.preventDefault();
-  //   alert('Form submitted');
-  //   closePopup(); // Close popup after form submission
-  // }
-
-
-    // function openUpdatePopup(patientId) {
-    //   console.log("Opening update popup for patient with ID:", patientId);
-    //   document.getElementById("update-popup-overlay").style.display = "flex";
-    // }
-
-
-
-
-
-
-
-</script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

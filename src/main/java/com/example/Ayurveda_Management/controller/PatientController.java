@@ -1,7 +1,7 @@
 package com.example.Ayurveda_Management.controller;
 
 import com.example.Ayurveda_Management.model.Patient;
-import com.example.Ayurveda_Management.model.User;
+import com.example.Ayurveda_Management.model.TreatmentRecord;
 import com.example.Ayurveda_Management.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -19,39 +19,57 @@ public class PatientController {
     @Autowired
     private PatientService patientService;
 
-
     @GetMapping("/list")
-    public String showPatientList(Model model) {
-        List<Patient> thePatients = patientService.findAll();  // Get all patients from the database
-        model.addAttribute("patients", thePatients);  // Pass the patients to the view
-
-        model.addAttribute("patient", new Patient());  // Initialize a new Patient object for the form
-        return "patient-list";  // Thymeleaf page
+    public String getAllPatients(Model theModel) {
+        List<Patient> thePatients = patientService.findAll();
+        theModel.addAttribute("patients", thePatients);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("Authenticated user roles: " + authentication.getAuthorities());
+        return "patient-list";
     }
 
+    @GetMapping("/showFormForAdd")
+    public String showFormForAdd(Model theModel) {
+        Patient thePatient = new Patient();
+        theModel.addAttribute("patient", thePatient);
+        return "patient-form";
+    }
 
-//     Show form to update existing patient
     @GetMapping("/showFormForUpdate")
-    @ResponseBody
     public String showFormForUpdate(@RequestParam("patientId") int theId, Model theModel) {
         Patient thePatient = patientService.findById(theId);
         theModel.addAttribute("patient", thePatient);
-        return "patient-list";  // Return to the patient-list page
+        return "patient-form";
     }
-
-
-    // Save patient (either add or update)
 
     @PostMapping("/save")
-    public String savePatient(@ModelAttribute("patient") Patient thePatient) {
+    public String saveTask(@ModelAttribute("patient") Patient thePatient) {
         patientService.save(thePatient);
-        return "redirect:/patient/list";  // Redirect to the patient list
+        return "redirect:/patient/list";
     }
 
-    // Delete patient
     @GetMapping("/delete")
     public String delete(@RequestParam("patientId") int theId) {
         patientService.deleteById(theId);
-        return "redirect:/patient/list";  // Redirect to the patient list
+        return "redirect:/patient/list";
     }
+
+    @GetMapping("/profile")
+    public String showPatientProfile(@RequestParam("patientId") int theId, Model theModel) {
+        Patient thePatient = patientService.findById(theId);
+        List<TreatmentRecord> treatmentRecords = patientService.findTreatmentRecordsByPatientId(theId);
+
+        theModel.addAttribute("patient", thePatient);
+        theModel.addAttribute("treatmentRecords", treatmentRecords);
+
+        return "patient-profile";
+    }
+
+    // Search for Patients by Name, Contact Number
+    @GetMapping("/searchPatient")
+    @ResponseBody
+    public List<Patient> searchPatients(@RequestParam("query") String query) {
+        return patientService.searchPatients(query);
+    }
+
 }

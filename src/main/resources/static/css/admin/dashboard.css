@@ -1,5 +1,5 @@
 /* Container Styling */
-.Staff-page-container {
+.page-container {
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -7,46 +7,72 @@
     margin-left: 240px;
     margin-right: 20px;
   }
-  
-  .Staff-content {
+
+  .content {
     flex: 1;
     padding: 20px;
   }
-  
- 
-  .Staff-top-section {
-    display: flex;
-    justify-content: flex-end;
-    flex-direction: column;
-    align-items: flex-end; 
-    margin-bottom: 20px;
+
+
+  .top-section {
+      display: flex;
+      justify-content: space-between; /* Ensures title is left, search bar is right */
+      align-items: center;
+      margin-bottom: 20px;
+      width: 100%;
   }
-  
-  .Staff-actions-container {
+
+.sidebar a {
     display: flex;
-    flex-direction: column; 
-    gap: 20px; 
-    align-items: flex-end; 
-  }
-  
-  /* Search Bar */
-  .Staff-search-container {
+    align-items: center;
+    padding: 10px;
+    color: black;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.sidebar a.active {
+    background-color: #007bff; /* Change this to your preferred highlight color */
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+    margin: -5px 0 0 0; /* Moves the title slightly up */
     position: relative;
-    width: 500px;
+    top: -40px; /* Adjust this value to move it up as needed */
+     padding: 20px;
+}
+
+  .actions-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-end;
   }
-  
-  .Staff-search-bar {
+
+  /* Search Bar */
+  .search-container {
+    position: relative;
+    width: 300px;
+  }
+
+  .search-bar {
     padding: 10px;
     border: 1px solid #232323;
     border-radius: 20px;
-    width: 100%; 
+    width: 110%;
   }
-  
-  .Staff-search-bar::placeholder {
+
+  .search-bar::placeholder {
     color: #555;
   }
-  
-  .Staff-search-icon {
+
+  .search-icon {
     position: absolute;
     right: 10px;
     top: 50%;
@@ -54,9 +80,9 @@
     font-size: 18px;
     color: #555;
   }
-  
+
   /* Add Button */
-  .Staff-add-btn {
+  .add-btn {
     padding: 10px 20px;
     background-color: #28a745;
     color: white;
@@ -64,39 +90,57 @@
     border-radius: 5px;
     font-size: 14px;
     cursor: pointer;
+    margin-right: -30px;
   }
-  
-  .Staff-add-btn:hover {
+
+  .add-btn:hover {
     background-color: #218838;
+    color: white;
   }
-  
+
   /* Table */
-  .Staff-table-container {
+  .table-container {
     margin-top: 20px;
   }
-  
-  .Staff-table {
+
+
+  .table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
   }
-  
-  .Staff-table th,
-  .Staff-table td {
+
+  .table th {
     border: 1px solid #ddd;
     padding: 10px;
     text-align: center;
   }
-  
-  .Staff-table th {
+
+  .table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+
+  /* Center-align Id values */
+  .table td.id {
+      text-align: center;
+  }
+
+  /* Center-align Action buttons */
+  .table td.action-buttons {
+      text-align: center;
+  }
+
+  .table th {
     background-color: #f8f9fa;
     font-weight: bold;
   }
-  
-  .Staff-table td {
+
+  .table td {
     font-size: 16px;
   }
-  
+
   /* Action Buttons */
   .btn-action {
     padding: 5px 10px;
@@ -106,7 +150,8 @@
     font-size: 14px;
     cursor: pointer;
   }
-  
+
+
 
   .btn-view {
     background-color: #28a745;
@@ -115,18 +160,19 @@
 
   .btn-view:hover{
     background-color: #218838;
-
+    color: white;
   }
-  
+
   .btn-update {
     background-color: #ffc107;
-    color: black;
+    color: white;
   }
 
   .btn-update:hover{
     background-color: #d8a200;
+    color: white;
   }
-  
+
   .btn-delete {
     background-color: #dc3545;
     color: white;
@@ -134,9 +180,10 @@
 
   .btn-delete:hover{
     background-color: #b62e3b;
+    color: white;
   }
-  
-  .Staff-popup-overlay {
+
+  .popup-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -149,8 +196,8 @@
     z-index: 1000;
     margin-top: 25px;
   }
-  
-  .Staff-popup-content {
+
+  .popup-content {
     /* background: #fff; */
     padding: 20px;
     border-radius: 8px;
@@ -159,37 +206,37 @@
     text-align: center;
     background-color: #d9d9d9;
   }
-  
-  .Staff-popup-content h3 {
+
+  .popup-content h3 {
     margin-top: 10px;
     margin-bottom: 15px;
     color: #28a745;
     /* font-weight: 600; */
-  
+
   }
-  
-  .Staff-popup-form .form-group {
+
+  .popup-form .form-group {
     margin-bottom: 15px;
   }
-  
-  .Staff-popup-form input,
-  .Staff-popup-form select,
-  .Staff-popup-form textarea {
+
+  .popup-form input,
+  .popup-form select,
+  .popup-form textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    
-  }
-  
-  
 
-  .Staff-popup-form input[type="date"] {
+  }
+
+
+
+  .popup-form input[type="date"] {
     color: #555;
   }
-  
-  .Staff-register-btn {
+
+  .register-btn {
     margin-top: 15px;
     padding: 10px 15px;
     background-color: #28a745;
@@ -201,7 +248,7 @@
     width: 150px;
   }
 
-  .Staff-close-btn {
+  .close-btn {
     margin-top: 15px;
     padding: 10px 15px;
     background-color: #dc3545;
@@ -212,18 +259,18 @@
     margin-left: 10px;
     width: 150px;
   }
-  
-  .Staff-close-btn:hover {
+
+  .close-btn:hover {
     background-color: #b62e3b;
   }
-  .Staff-register-btn:hover {
+  .register-btn:hover {
     background-color: #218838 ;
   }
-  
+
 
 
   /* Profile */
-  
+
   /* Profile Popup Overlay */
 .profile-popup-overlay {
   position: fixed;
@@ -231,7 +278,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6); 
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -242,10 +289,10 @@
 /* Profile Popup Content */
 .profile-popup-content {
   background-color: #fff;
-  padding: 35px; 
-  width: 500px; 
+  padding: 35px;
+  width: 500px;
   border-radius: 10px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); 
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   text-align: left;
   position: relative;
   transition: all 0.3s ease;
@@ -282,8 +329,8 @@
   border-radius: 4px;
   cursor: pointer;
   cursor: pointer;
-  display: block; 
-  width: 100%; 
+  display: block;
+  width: 100%;
 }
 
 .btn-close-new:hover {
@@ -295,33 +342,33 @@
 
 /* Delete Box ============================================ */
 
-.staff-popup-overlay-delete{
+.popup-overlay-delete{
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6); 
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; 
+  z-index: 1000;
 }
 
 
-.staff-popup-content-delete{
+.popup-content-delete{
   background-color: #fff;
   border-radius: 8px;
   padding: 20px;
-  width: 400px; 
-  max-width: 90%; 
+  width: 400px;
+  max-width: 90%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
   animation: fadeIn 0.3s ease-in-out;
 }
 
 
-.staff-popup-content-delete h3{
+.popup-content-delete h3{
   font-size: 18px;
   margin-bottom: 20px;
   color: #333;
@@ -333,10 +380,10 @@
   justify-content: center;
   margin-top: 20px;
 }
-  
 
 
-.staff-close-btn {
+
+.close-btn {
   margin-top: 15px;
   padding: 10px 15px;
   background-color: #dc3545;
@@ -348,8 +395,8 @@
   width: 150px;
 }
 
-.staff-close-btn:hover {
-  background-color: #b62e3b;
+.close-btn:hover {
+  background-color:#b62e3b;
 }
 
 
