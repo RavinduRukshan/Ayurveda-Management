@@ -54,27 +54,22 @@ public class UserController {
 
 
     // Show form for adding or updating user (Admin only)
-    @GetMapping("/showForm")
-    public String showForm(@RequestParam(value = "userId", required = false) Integer theId, Model theModel) {
-        User theUser = (theId != null) ? userService.findById(theId) : new User();
-        theModel.addAttribute("user", theUser);
-        populateModelForForm(theModel); // Populate dropdowns for roles and staff
-        return "user-form";
-    }
-
-
-//    // Show form for updating user (Admin only)
-//    @GetMapping("/showFormForUpdate")
-//    public String showFormForUpdate(@RequestParam("userId") int theId, Model theModel) {
-//        User theUser = userService.findById(theId);
-//        if (theUser == null) {
-//            theModel.addAttribute("error", "User not found.");
-//            return "redirect:/admin/list";
-//        }
+//    @GetMapping("/showForm")
+//    public String showForm(@RequestParam(value = "userId", required = false) Integer theId, Model theModel) {
+//        User theUser = (theId != null) ? userService.findById(theId) : new User();
 //        theModel.addAttribute("user", theUser);
 //        populateModelForForm(theModel); // Populate dropdowns for roles and staff
 //        return "user-form";
 //    }
+
+
+    @GetMapping("/showForm")
+    public String showForm(Model theModel) {
+        User theUser = new User();
+        theModel.addAttribute("user", theUser);
+        populateModelForForm(theModel); // Populate dropdowns for roles and staff
+        return "user-form";
+    }
 
 
     // Save or update user (Admin only)

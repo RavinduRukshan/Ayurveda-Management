@@ -1,6 +1,7 @@
 package com.example.Ayurveda_Management.controller;
 
 import com.example.Ayurveda_Management.model.Dispensary;
+import com.example.Ayurveda_Management.model.Patient;
 import com.example.Ayurveda_Management.model.Role;
 import com.example.Ayurveda_Management.model.Staff;
 import com.example.Ayurveda_Management.service.DispensaryService;

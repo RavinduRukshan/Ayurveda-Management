@@ -1,6 +1,7 @@
 package com.example.Ayurveda_Management.service;
 
 import com.example.Ayurveda_Management.model.Patient;
+import com.example.Ayurveda_Management.model.TreatmentRecord;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,10 @@ public interface PatientService {
 
     void deleteById(int theId);
 
-    List<Patient> findByNameContainingOrContactNumber(String name, String contactNumber);
+//    List<Patient> findByNameContainingOrContactNumber(String name, String contactNumber);
+
+    List<Patient> searchPatients(String query);
+
+    List<TreatmentRecord> findTreatmentRecordsByPatientId(int patientId);
 
 }

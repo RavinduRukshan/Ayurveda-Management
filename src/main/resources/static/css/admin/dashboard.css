@@ -1,5 +1,5 @@
 /* Container Styling */
-.users-page-container {
+.page-container {
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -8,13 +8,13 @@
     margin-right: 20px;
   }
   
-  .users-content {
+  .content {
     flex: 1;
     padding: 20px;
   }
   
  
-  .users-top-section {
+  .top-section {
     display: flex;
     justify-content: flex-end;
     flex-direction: column;
@@ -22,7 +22,7 @@
     margin-bottom: 20px;
   }
   
-  .users-actions-container {
+  .actions-container {
     display: flex;
     flex-direction: column; 
     gap: 20px; 
@@ -30,23 +30,23 @@
   }
   
   /* Search Bar */
-  .users-search-container {
+  .search-container {
     position: relative;
     width: 500px;
   }
   
-  .users-search-bar {
+  .search-bar {
     padding: 10px;
     border: 1px solid #232323;
     border-radius: 20px;
     width: 100%; 
   }
   
-  .users-search-bar::placeholder {
+  .search-bar::placeholder {
     color: #555;
   }
   
-  .users-search-icon {
+  .search-icon {
     position: absolute;
     right: 10px;
     top: 50%;
@@ -56,7 +56,7 @@
   }
   
   /* Add Button */
-  .users-add-btn {
+  .add-btn {
     padding: 10px 20px;
     background-color: #28a745;
     color: white;
@@ -66,35 +66,41 @@
     cursor: pointer;
   }
   
-  .users-add-btn:hover {
+  .add-btn:hover {
     background-color: #218838;
+    color: white;
   }
   
   /* Table */
-  .users-table-container {
+  .table-container {
     margin-top: 20px;
   }
   
-  .users-table {
+  .table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
   }
   
-  .users-table th,
-  .users-table td {
+  .table th {
     border: 1px solid #ddd;
     padding: 10px;
     text-align: center;
   }
+
+  .table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
   
-  .users-table th {
+  .table th {
     background-color: #f8f9fa;
     font-weight: bold;
   }
   
-  .users-table td {
-    font-size: 14px;
+  .table td {
+    font-size: 16px;
   }
   
   /* Action Buttons */
@@ -103,26 +109,42 @@
     border: none;
     border-radius: 4px;
     margin: 0 2px;
-    font-size: 12px;
+    font-size: 14px;
     cursor: pointer;
   }
   
+
   .btn-view {
     background-color: #28a745;
-    color: rgb(255, 255, 255);
+    color: white;
+  }
+
+  .btn-view:hover{
+    background-color: #218838;
+    color: white;
   }
   
   .btn-update {
     background-color: #ffc107;
-    color: black;
+    color: white;
+  }
+
+  .btn-update:hover{
+    background-color: #d8a200;
+    color: white;
   }
   
   .btn-delete {
     background-color: #dc3545;
     color: white;
   }
+
+  .btn-delete:hover{
+    background-color: #b62e3b;
+    color: white;
+  }
   
-  .users-popup-overlay {
+  .popup-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -136,8 +158,8 @@
     margin-top: 25px;
   }
   
-  .users-popup-content {
-    background: #fff;
+  .popup-content {
+    /* background: #fff; */
     padding: 20px;
     border-radius: 8px;
     width: 400px;
@@ -146,31 +168,36 @@
     background-color: #d9d9d9;
   }
   
-  .users-popup-content h3 {
+  .popup-content h3 {
     margin-top: 10px;
     margin-bottom: 15px;
     color: #28a745;
+    /* font-weight: 600; */
+  
   }
   
-  .users-popup-form .form-group {
+  .popup-form .form-group {
     margin-bottom: 15px;
   }
   
-  .users-popup-form input,
-  .users-popup-form select,
-  .users-popup-form textarea {
+  .popup-form input,
+  .popup-form select,
+  .popup-form textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    
   }
   
-  .users-popup-form input[type="date"] {
+  
+
+  .popup-form input[type="date"] {
     color: #555;
   }
   
-  .users-register-btn {
+  .register-btn {
     margin-top: 15px;
     padding: 10px 15px;
     background-color: #28a745;
@@ -182,7 +209,7 @@
     width: 150px;
   }
 
-  .users-close-btn {
+  .close-btn {
     margin-top: 15px;
     padding: 10px 15px;
     background-color: #dc3545;
@@ -193,74 +220,82 @@
     margin-left: 10px;
     width: 150px;
   }
-
-  .users-close-btn:hover {
+  
+  .close-btn:hover {
     background-color: #b62e3b;
   }
-  .users-register-btn:hover {
-    background-color: #218838;
+  .register-btn:hover {
+    background-color: #218838 ;
   }
   
-  /* Container for the staff selector ==============================*/
-.staff-selector-container {
-  position: relative; /* Position relative for dropdown alignment */
-  width: 100%; /* Adjust width to fit the parent container */
-  max-width: 400px; /* Optional: Set a max width for input field */
-  margin: 0 auto; /* Center horizontally if needed */
+
+
+  /* Profile */
+  
+  /* Profile Popup Overlay */
+.profile-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
 }
 
-/* Styling for the input field */
-.staff-selector-container input {
-  width: 100%; /* Full width of the container */
-  padding: 10px 12px; /* Inner spacing for input field */
-  font-size: 14px; /* Standard font size */
-  border: 1px solid #ccc; /* Light border for a clean look */
-  border-radius: 4px; /* Rounded corners for input field */
-  outline: none; /* Remove default outline on focus */
-  transition: border-color 0.3s ease; /* Smooth focus effect */
+/* Profile Popup Content */
+.profile-popup-content {
+  background-color: #fff;
+  padding: 35px; 
+  width: 500px; 
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); 
+  text-align: left;
+  position: relative;
+  transition: all 0.3s ease;
 }
 
-/* Highlight the input field on focus */
-.staff-selector-container input:focus {
-  border-color: #007bff; /* Change border color on focus */
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add subtle glow */
+/* Title */
+.profile-popup-content h3 {
+  font-size: 28px;
+  color: #007b5e;
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: 600;
 }
 
-/* Dropdown for staff options */
-.staff-options {
-  position: absolute; /* Position relative to container */
-  top: 100%; /* Align directly below the input field */
-  left: 0; /* Align to the left of the container */
-  width: 100%; /* Match the width of the input field */
-  background: #fff; /* White background for dropdown */
-  border: 1px solid #ccc; /* Light border for separation */
-  border-radius: 4px; /* Rounded corners for dropdown */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  max-height: 200px; /* Limit height with scroll */
-  overflow-y: auto; /* Enable vertical scrolling for long lists */
-  z-index: 1000; /* Ensure it appears above other elements */
-  padding: 0; /* Remove default padding for ul */
-  margin-top: 5px; /* Space between input and dropdown */
-  list-style: none; /* Remove default bullet points */
+/* Profile Info */
+.profile-info p {
+  font-size: 16px;
+  color: #555;
+  margin: 12px 0;
+  line-height: 1.6;
 }
 
-/* Individual list item in the dropdown */
-.staff-options li {
-  padding: 10px; /* Spacing inside each item */
-  font-size: 14px; /* Standard font size */
-  cursor: pointer; /* Pointer cursor for interactivity */
-  transition: background-color 0.2s ease; /* Smooth hover effect */
+.profile-info strong {
+  font-weight: bold;
+  color: #333;
 }
 
-/* Hover effect for dropdown items */
-.staff-options li:hover {
-  background-color: #f1f1f1; /* Light gray on hover */
+.btn-close-new {
+  margin-top: 25px;
+  padding: 8px 15px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  cursor: pointer;
+  display: block; 
+  width: 100%; 
 }
 
-/* Selected staff item styling (optional, add a class when selected) */
-.staff-options li.selected {
-  background-color: #007bff; /* Highlight color for selection */
-  color: #fff; /* White text on selected item */
+.btn-close-new:hover {
+  background-color: #218838;
 }
 
 
@@ -268,7 +303,7 @@
 
 /* Delete Box ============================================ */
 
-.user-popup-overlay-delete{
+.popup-overlay-delete{
   position: fixed;
   top: 0;
   left: 0;
@@ -282,7 +317,7 @@
 }
 
 
-.user-popup-content-delete{
+.popup-content-delete{
   background-color: #fff;
   border-radius: 8px;
   padding: 20px;
@@ -294,7 +329,7 @@
 }
 
 
-.user-popup-content-delete h3{
+.popup-content-delete h3{
   font-size: 18px;
   margin-bottom: 20px;
   color: #333;
@@ -309,7 +344,7 @@
   
 
 
-.user-close-btn {
+.close-btn {
   margin-top: 15px;
   padding: 10px 15px;
   background-color: #dc3545;
@@ -321,6 +356,59 @@
   width: 150px;
 }
 
-.user-close-btn:hover {
-  background-color: #b62e3b;
+.close-btn:hover {
+  background-color:#b62e3b;
 }
+
+
+/* profile card ============================================ */
+
+/* Patient Details Card Styling */
+.profile-card {
+    width: 100%;
+    max-width: 600px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: 20px auto;
+    font-family: 'Arial', sans-serif;
+}
+
+.profile-card-header {
+    background: #24757e;
+    color: #fff;
+    padding: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.profile-card-body {
+    padding: 20px;
+}
+
+.profile-card-body p {
+    font-size: 16px;
+    color: #333;
+    margin: 10px 0;
+}
+
+.profile-card-body p strong {
+    color: #24757e;
+}
+
+.profile-card-body span {
+    color: #555;
+}
+
+/* Add responsiveness */
+@media (max-width: 768px) {
+    .profile-card {
+        max-width: 90%;
+    }
+}
+
+
+
+

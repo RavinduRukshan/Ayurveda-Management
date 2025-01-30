@@ -69,68 +69,52 @@
                 </ul>
             </div>
 
-            <!-- Staff Form----------------------------------------------------------------------------------------- -->
-            <div class="container mt-5">
-                <h2 class="text-center" th:text="${staff.id != null ? 'Add New Staff' : 'Update Staff'}"></h2>
-                <form th:action="@{/staff/save}" th:object="${staff}" method="post">
-                    <input type="hidden" th:field="*{id}"> <!-- Hidden field for the id -->
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" th:field="*{name}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="role" class="form-label">Role</label>
-                        <select class="form-control" id="role" th:field="*{role}" required>
-                            <option value="" disabled>Select Role</option>
-                            <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.roleName}"></option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="contactNumber" class="form-label">Contact Number</label>
-                        <input type="text" class="form-control" id="contactNumber" th:field="*{contactNumber}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" th:field="*{email}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Address</label>
-                        <textarea class="form-control" id="address" th:field="*{address}" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="salary" class="form-label">Salary</label>
-                        <input type="number" class="form-control" id="salary" th:field="*{salary}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="hireDate" class="form-label">Hire Date</label>
-                        <input type="date" class="form-control" id="hireDate" th:field="*{hireDate}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="status" class="form-label">Status</label>
-                        <select class="form-control" id="status" th:field="*{status}" required>
-                            <option value="">Select Status</option>
-                            <option th:value="${T(com.example.Ayurveda_Management.model.Status).Active}">Active</option>
-                            <option th:value="${T(com.example.Ayurveda_Management.model.Status).Inactive}">Inactive</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="dispensary" class="form-label">Dispensary</label>
-                        <select class="form-control" id="dispensary" th:field="*{dispensary}" required>
-                            <option value="" disabled>Select Dispensary</option>
-                            <option th:each="dispensary : ${dispensaries}" th:value="${dispensary.id}" th:text="${dispensary.name}"></option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                    <a href="/staff/list" class="btn btn-secondary">Cancel</a>
-                </form>
+            <!-- Patient View--------------------------------------------------------------------------------------- -->
+            <div class="profile-card">
+                <div class="profile-card-header">
+                    <h4>Details of <span th:text="${patient.name}"></span></h4>
+                </div>
+                <div class="profile-card-body">
+                    <p><strong>ID:</strong> <span th:text="${patient.id}"></span></p>
+                    <p><strong>Name:</strong> <span th:text="${patient.name}"></span></p>
+                    <p><strong>Age:</strong> <span th:text="${patient.age}"></span></p>
+                    <p><strong>Address:</strong> <span th:text="${patient.address}"></span></p>
+                    <p><strong>Phone:</strong> <span th:text="${patient.contactNumber}"></span></p>
+                    <p><strong>Medical History:</strong> <span th:text="${patient.medicalHistory}"></span></p>
+                    <p><strong>Notes:</strong> <span th:text="${patient.notes}"></span></p>
+                </div>
+            </div>
+
+
+            <!-- Treatment History -->
+            <h4 class="mb-3">Treatment History</h4>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Sickness</th>
+                    <th>Medicine Given</th>
+                    <th>Therapy Given</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="record : ${treatmentRecords}">
+                    <td th:text="${record.sicknessDescription}"></td>
+                    <td th:text="${record.medicinePrescribed}"></td>
+                    <td th:text="${record.therapyGiven}"></td>
+                    <td th:text="${record.treatmentDate}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="mt-4">
+                <a th:href="@{/patient/list}" class="btn btn-secondary">Back to List</a>
             </div>
 
 
 
         </div>
     </div>
-    </div>
-
 
 
 

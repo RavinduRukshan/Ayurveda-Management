@@ -1,62 +1,219 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Treatment Records</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Ayurweda Management System - Login" />
+    <title>Ayurveda Management System</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/AdminDashboard.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/Sidebar.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/dashboard.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/Navbar.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/MainContent.css}">
 </head>
+
 <body>
-<div class="container mt-4">
-    <h1 class="text-center mb-4">Treatment Records</h1>
+<div id="root">
+    <div class="page-container">
+        <!-- Navbar----------------------------------------------------------------------------------------------------- -->
+        <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #24757e; color: #ffffff">
+            <div class="container-fluid">
+                <div class="d-flex align-items-center flex-wrap flex-lg-nowrap w-100 justify-content-end">
+                    <ul class="navbar-nav d-flex flex-row w-auto mt-2 mt-lg-0">
+                        <li class="nav-items">
+                            <div class="dropdown">
+                                <button
+                                        class="nav-link text-white dropdown-toggle"
+                                        style="background: none; border: none"
+                                        id="navbarDropdown"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                >
+                                    <img
+                                            src="/images/user.png"
+                                            alt="user"
+                                            style="width: 37px; padding-right: 9px; margin-right: 5px"
+                                    />
+                                    <img
+                                            src="/images/arrow.png"
+                                            alt="arrow"
+                                            style="width: 15px"
+                                    />
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="#profile">Profile</a></li>
+                                    <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
 
-    <!-- Date Filter Form -->
-    <div class="d-flex justify-content-between mb-3">
-        <form th:action="@{/treatment/list}" method="get" class="d-flex">
-            <input
-                    type="date"
-                    name="date"
-                    class="form-control me-2"
-                    th:value="${selectedDate}"
-                    required>
-            <button type="submit" class="btn btn-primary">Filter by Date</button>
-        </form>
-        <a href="/treatment/showFormForAdd" class="btn btn-success">Add New Record</a>
+        <div class="content">
+            <div class="top-section">
+                <div class="actions-container">
+                    <div class="search-container">
+                        <input type="text" placeholder="Search for patients" class="search-bar" />
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                    <a th:href="@{/patient/showFormForAdd}" class="btn add-btn">Add New Patient</a>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <!-- Sidebar------------------------------------------------------------------------------------------------ -->
+                <div class="sidebar">
+                    <h2>Dashboard</h2>
+                    <ul>
+                        <li><a th:href="@{/treatment/list}"><img src="/images/Dashboard.png" alt="Dashboard" style="width: 25px; margin-right: 10px" /><span>Dashboard</span></a></li>
+                        <li><a th:href="@{/patient/list}"><img src="/images/Patients.png" alt="Patients" style="width: 25px; margin-right: 10px" /><span>Patients</span></a></li>
+                        <li><a th:href="@{/user/list}"><img src="/images/Patients.png" alt="Users" style="width: 25px; margin-right: 10px" /><span>Users</span></a></li>
+                        <li><a th:href="@{/staff/list}"><img src="/images/Patients.png" alt="Staff" style="width: 25px; margin-right: 10px" /><span>Staff</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="layout-container">
+                    <!--Right Side: Form-->
+                    <div class="form-container">
+                        <h3>Add New Treatment</h3>
+                        <form th:action="@{/treatment/save}" th:object="${record}" method="POST">
+
+                            <!-- Patient search -->
+                            <div class="staff-selector-container">
+                                <label for="patientSearch">Search Patient (Name or Contact):</label>
+                                <input type="text" id="patientSearch" class="form-control" placeholder="Start typing Patient Name or Contact Number" />
+                                <div id="patientSuggestions"></div> <!-- For showing suggestions -->
+                            </div>
+                            <input type="hidden" id="patientId" name="patientId" th:value="${record.patient.id}" />
+
+
+
+
+                            <div class="mb-3">
+                                <label for="treatmentDate">Treatment Date:</label>
+                                <input type="date" id="treatmentDate" class="form-control" th:field="*{treatmentDate}" required />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="treatmentTime">Treatment Time:</label>
+                                <input type="time" id="treatmentTime" class="form-control" th:field="*{treatmentTime}" required />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="sicknessDescription">Sickness Description:</label>
+                                <textarea id="sicknessDescription" class="form-control" th:field="*{sicknessDescription}"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="medicinePrescribed">Medicine Prescribed:</label>
+                                <textarea id="medicinePrescribed" class="form-control" th:field="*{medicinePrescribed}"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="therapyGiven">Therapy Given:</label>
+                                <textarea id="therapyGiven" class="form-control" th:field="*{therapyGiven}"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="progressNotes">Progress Notes:</label>
+                                <textarea id="progressNotes" class="form-control" th:field="*{progressNotes}"></textarea>
+                            </div>
+
+                            <!--Staff search -->
+                            <div className="staff-selector-container">
+                                <label for="staffNameInput" class="form-label">Staff Name</label>
+                                <input type="text" id="staffNameInput" class="form-control" placeholder="Search staff by name" required />
+                                <ul id="staffSuggestions" class="list-group"></ul>
+                                <input type="hidden" id="staffIdInput" name="staff.id" th:field="*{staff.id}" required />
+                                <div class="invalid-feedback">Please select a staff member.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="treatmentAmount">Treatment Amount:</label>
+                                <input type="number" id="treatmentAmount" class="form-control" th:field="*{treatmentAmount}" step="0.01" required />
+                            </div>
+
+                            <button type="submit" className="submit-btn">
+                                Submit
+                            </button>
+                        </form>
+                    </div>
+
+
+
+                    <!-- Patient List------------------------------------------------------------------------------------------- -->
+                    <!-- Date Filter Form -->
+                    <div class="d-flex justify-content-between mb-3">
+                        <form th:action="@{/treatment/list}" method="get" class="d-flex">
+                            <input
+                                    type="date"
+                                    name="date"
+                                    class="form-control me-2"
+                                    th:value="${selectedDate}"
+                                    required>
+                            <button type="submit" class="btn btn-primary">Filter by Date</button>
+                        </form>
+                    </div>
+
+                    <!-- Table for Treatment Records -->
+                    <table class="table table-bordered table-hover">
+                        <thead class="table">
+                        <tr>
+                            <th>ID</th>
+                            <th>Patient Name</th>
+                            <th>Sickness</th>
+                            <th>Treatment</th>
+                            <th>Treatment Time</th>
+                            <th>Amount</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="record : ${records}">
+                            <td th:text="${record.id}"></td>
+                            <td th:text="${record.patient.name}"></td>
+                            <td th:text="${record.sicknessDescription}"></td>
+                            <td th:text="${record.medicinePrescribed}"></td>
+                            <td th:text="${record.treatmentTime}"></td>
+                            <td th:text="${record.treatmentAmount}"></td>
+                            <td>
+                                <a th:href="@{/treatment/showFormForUpdate(recordId=${record.id})}" class="btn btn-warning btn-sm">Edit</a>
+                                <a th:href="@{/treatment/delete(recordId=${record.id})}" class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Are you sure you want to delete this record?')">Delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Delete confirmation popup---------------------------------------------------------------------------------- -->
+        <div id="delete-popup-overlay" class="popup-overlay-delete" style="display: none;">
+            <div class="popup-content-delete" onClick="event.stopPropagation()">
+                <h3 class="delete-text">Are you sure you want to delete this?</h3>
+                <div class="confirmation-buttons">
+                    <button class="btn-action btn-view" onClick="handleDelete()">Yes, Delete</button>
+                    <button class="btn-action btn-delete" onClick="closeDeletePopup()">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+
+
+
     </div>
-
-    <!-- Table for Treatment Records -->
-    <table class="table table-bordered table-hover">
-        <thead class="table-dark">
-        <tr>
-            <th>ID</th>
-            <th>Patient Name</th>
-            <th>Treatment Date</th>
-            <th>Treatment Time</th>
-            <th>Sickness</th>
-            <th>Medicine</th>
-            <th>Staff Name</th>
-            <th>Amount</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="record : ${records}">
-            <td th:text="${record.id}"></td>
-            <td th:text="${record.patient.name}"></td>
-            <td th:text="${record.treatmentDate}"></td>
-            <td th:text="${record.treatmentTime}"></td>
-            <td th:text="${record.sicknessDescription}"></td>
-            <td th:text="${record.medicinePrescribed}"></td>
-            <td th:text="${record.staff.name}"></td>
-            <td th:text="${record.treatmentAmount}"></td>
-            <td>
-                <a th:href="@{/treatment/showFormForUpdate(recordId=${record.id})}" class="btn btn-warning btn-sm">Edit</a>
-                <a th:href="@{/treatment/delete(recordId=${record.id})}" class="btn btn-danger btn-sm"
-                   onclick="return confirm('Are you sure you want to delete this record?')">Delete</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

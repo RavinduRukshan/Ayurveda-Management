@@ -1,7 +1,9 @@
 package com.example.Ayurveda_Management.service;
 
 import com.example.Ayurveda_Management.model.Patient;
+import com.example.Ayurveda_Management.model.TreatmentRecord;
 import com.example.Ayurveda_Management.repository.PatientRepository;
+import com.example.Ayurveda_Management.repository.TreatmentRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +14,12 @@ import java.util.Optional;
 public class PatientServiceImpl implements PatientService{
 
     private PatientRepository patientRepository;
+    private TreatmentRecordRepository treatmentRecordRepository;
 
     @Autowired
-    public PatientServiceImpl(PatientRepository thePatientRepository) {
+    public PatientServiceImpl(PatientRepository thePatientRepository, TreatmentRecordRepository theTreatmentRecordRepository) {
         patientRepository = thePatientRepository;
+        treatmentRecordRepository = theTreatmentRecordRepository;
     }
 
     @Override
@@ -48,8 +52,18 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public List<Patient> findByNameContainingOrContactNumber(String name, String contactNumber) {
-        return patientRepository.findByNameContainingOrContactNumber(name, contactNumber);
+    public List<Patient> searchPatients(String query) {
+        return patientRepository.findByNameContainingIgnoreCaseOrContactNumberContainingIgnoreCase(query, query);
+    }
+
+//    @Override
+//    public List<Patient> findByNameContainingOrContactNumber(String name, String contactNumber) {
+//        return patientRepository.findByNameContainingOrContactNumber(name, contactNumber);
+//    }
+
+    @Override
+    public List<TreatmentRecord> findTreatmentRecordsByPatientId(int patientId) {
+        return treatmentRecordRepository.findByPatientId(patientId);
     }
 
 //    @Override
